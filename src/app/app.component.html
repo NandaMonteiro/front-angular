@@ -1,0 +1,64 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Amigo Secreto</li>
+  </ol>
+</nav>
+
+<div class="container">
+<div class="card add-pessoa">
+  <h5 class="card-header">Adicionar/Atualizar Pessoas</h5>
+  <div class="card-body">
+      <form id="add-form" (ngSubmit)="f.form.valid && savePessoa(f)" #f="ngForm"  novalidate>
+        <div class="form-group">
+            <label for="model">Nome</label>
+            <input type="text" [(ngModel)]="pessoa.name" id="name" name="name" 
+            #model="ngModel" required class="form-control" 
+            [ngClass]="{ 'is-invalid': f.submitted && model.invalid }" 
+            placeholder="Digite o nome">
+            <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                <div *ngIf="model.errors.required">Nome é obrigatório</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="color">Email</label>
+            <input type="text" [(ngModel)]="pessoa.email" id="email" name="email" 
+            #color="ngModel" required class="form-control" 
+            [ngClass]="{ 'is-invalid': f.submitted && color.invalid }" 
+            placeholder="Digite o email">
+            <div *ngIf="f.submitted && color.invalid" class="invalid-feedback">
+                <div *ngIf="color.errors.required">Email é obrigatória</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-add-pessoa">Salvar</button>
+        <button type="reset" class="btn btn-secondary btn-add-pessoa" (click)="cleanForm(f)">Cancelar</button>
+      </form>
+  </div>
+
+
+<div class="card list-pessoa">
+  <h5 class="card-header">Lista de Pessoas</h5>
+  <div class="card-body">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pessoa of pessoas">
+            <td>{{pessoa.name}}</td>
+            <td>{{pessoa.email}}</td>
+            <td>
+              <button type="button" class="btn btn-warning btn-sm" (click)="editPessoa(pessoa)">Editar</button>
+              <button type="button" class="btn btn-danger btn-sm ml-1" (click)="deletePessoa(pessoa)">Deletar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+<button type="button" class="btn btn-sorteio" (click)="sorteio()">Sorteio</button>
+
+</div>
